@@ -1,0 +1,13 @@
+package org.neep.rpc.server;
+
+/**
+ * @Title RemoteServiceConfig
+ * @Description
+ * @Copyright: 版权所有 (c) 2018 - 2019
+ * @Company: gdjt
+ * @Author root
+ * @Version 1.0.0
+ * @Create 19-6-9 下午10:54
+ */
+public class RemoteServiceConfig {
+}
