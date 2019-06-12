@@ -1,4 +1,4 @@
-package org.neep.spring.ext.testing;
+package org.neep.rpc.testing;
 
 import org.springframework.boot.test.context.SpringBootTestContextBootstrapper;
 import org.springframework.test.context.ContextLoader;
