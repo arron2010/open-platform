@@ -2,9 +2,10 @@ package org.neep.rpc.common;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Sets;
+import org.neep.proxy.api.ProxyProvider;
+import org.neep.proxy.impl.cglib.CglibProvider;
 import org.neep.rpc.server.ServiceHandler;
-import com.neep.platform.proxy.ProxyProvider;
-import com.neep.platform.proxy.impl.cglib.CglibProvider;
+
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.support.RootBeanDefinition;
 import org.springframework.lang.Nullable;

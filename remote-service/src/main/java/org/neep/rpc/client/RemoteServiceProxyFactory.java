@@ -1,7 +1,8 @@
 package org.neep.rpc.client;
 
-import com.neep.platform.proxy.ProxyProvider;
-import com.neep.platform.proxy.impl.jdk.JdkProxyProvider;
+
+import org.neep.proxy.api.ProxyProvider;
+import org.neep.proxy.impl.jdk.JdkProxyProvider;
 
 /**
  * @Title RemoteServiceMethod

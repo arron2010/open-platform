@@ -1,9 +1,10 @@
 package org.neep.rpc.server;
 
-import com.neep.platform.proxy.Interceptor;
-import com.neep.platform.proxy.Invocation;
-import com.neep.platform.spring.ReflectionHelper;
+
 import io.grpc.BindableService;
+import org.neep.proxy.api.Interceptor;
+import org.neep.proxy.api.Invocation;
+import org.neep.utils.reflect.ReflectionHelper;
 
 /**
  * @Title ServiceHandler

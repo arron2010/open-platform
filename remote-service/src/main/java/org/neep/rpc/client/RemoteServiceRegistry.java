@@ -1,6 +1,8 @@
 package org.neep.rpc.client;
 
-import com.neep.platform.exceptions.RemoteServiceException;
+
+
+import org.neep.utils.exceptions.RemoteServiceException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -9,7 +11,7 @@ import java.util.Map;
  * @Title RemoteServiceRegistry
  * @Description
  * @Copyright: 版权所有 (c) 2018 - 2019
- * @Company: gdjt
+ * @Company:
  * @Author root
  * @Version 1.0.0
  * @Create 19-6-10 下午11:16

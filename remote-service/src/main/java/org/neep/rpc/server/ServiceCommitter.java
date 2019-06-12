@@ -1,6 +1,7 @@
 package org.neep.rpc.server;
 
-import com.neep.platform.proxy.Invocation;
+
+import org.neep.proxy.api.Invocation;
 
 /**
  * @Title ServiceCommitter
