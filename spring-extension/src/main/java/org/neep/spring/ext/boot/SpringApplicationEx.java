@@ -4,6 +4,7 @@ import org.neep.spring.ext.api.IBeanInitializer;
 import org.neep.spring.ext.support.CglibSubclassingInstantiationStrategyEx;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
+import org.springframework.beans.factory.support.InstantiationStrategy;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.GenericApplicationContext;
@@ -32,7 +33,7 @@ public class SpringApplicationEx extends SpringApplication {
      *@title 注入新的Bean实例化策略
      *@description 为了实现根据对象的属性或特征值，动态增加对象行为，需要BeanFactory对象中，注入新的策略。
      * 此时，对象实例还未加入spring容器
-     *@param  []
+     *@param
      *@return  org.springframework.context.ConfigurableApplicationContext
      *@author
      *@createDate
@@ -46,7 +47,9 @@ public class SpringApplicationEx extends SpringApplication {
             AutowireCapableBeanFactory autowireCapableBeanFactory= genericApplicationContext.getDefaultListableBeanFactory();
             if (autowireCapableBeanFactory instanceof DefaultListableBeanFactory){
                 DefaultListableBeanFactory defaultListableBeanFactory = (DefaultListableBeanFactory)autowireCapableBeanFactory;
-                defaultListableBeanFactory.setInstantiationStrategy(new CglibSubclassingInstantiationStrategyEx());
+                CglibSubclassingInstantiationStrategyEx instantiationStrategy =new CglibSubclassingInstantiationStrategyEx();
+                instantiationStrategy.setBeanInitializer( this.beanInitializer);
+                defaultListableBeanFactory.setInstantiationStrategy(instantiationStrategy);
             }
         }
         return context;

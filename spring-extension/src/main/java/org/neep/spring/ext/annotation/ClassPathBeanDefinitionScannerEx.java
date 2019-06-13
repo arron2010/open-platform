@@ -28,6 +28,8 @@ public class ClassPathBeanDefinitionScannerEx extends ClassPathBeanDefinitionSca
 
     private IDoScan scanner;
 
+
+
     public ClassPathBeanDefinitionScannerEx(BeanDefinitionRegistry registry) {
         super(registry);
     }
@@ -73,8 +75,17 @@ public class ClassPathBeanDefinitionScannerEx extends ClassPathBeanDefinitionSca
             });
         }
     }
+
+//    public void setBeanNameGenerator( BeanNameGenerator beanNameGenerator){
+//        if (this.beanNameHandler != null){
+//            super.setBeanNameGenerator(this.beanNameHandler.createGenerator());
+//        }else{
+//            super.setBeanNameGenerator(beanNameGenerator);
+//        }
+//    }
     public void setScanner(IDoScan scanner) {
         this.scanner = scanner;
     }
+
 
 }
