@@ -40,6 +40,7 @@ public class DoScanImpl implements IDoScan {
             definition.getConstructorArgumentValues().addGenericArgumentValue(definition.getBeanClassName());
             definition.setBeanClass(this.serviceFactoryBean.getClass());
 
+            definition.setPrimary(true);
             definition.getPropertyValues().add("remoteServiceRegistry", remoteServiceRegistry);
             definition.setAutowireMode(AbstractBeanDefinition.AUTOWIRE_BY_TYPE);
         }

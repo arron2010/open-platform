@@ -34,27 +34,24 @@ public class ServiceBeanInitializer implements IBeanInitializer {
      */
     @Override
     public Object instantiateBean(BeanDefinition bd, String beanName, BeanFactory owner, Object src) {
-        try{
-            Class<?> beanClass = Class.forName(bd.getBeanClassName());
-            Class<?>[] interfaces =beanClass.getInterfaces();
-            Set<Class<?>> proxyInterfaces = Sets.newLinkedHashSet();
-            for (int i =0;i < interfaces.length;i++){
-                Annotation annotation = interfaces[i].getAnnotation(RemoteService.class);
-                if (annotation != null){
-                    proxyInterfaces.add(interfaces[i]);
-                }
-            }
-            Preconditions.checkState(proxyInterfaces.size()>0,"Grpc服务接口缺少RemoteService注解");
-            ServiceHandler serviceHandler = new ServiceHandler(proxyInterfaces.toArray(new Class<?>[proxyInterfaces.size()]));
-            proxyInterfaces.add(io.grpc.BindableService.class);
-            Class<?>[]  proxyClazz =proxyInterfaces.toArray(new Class[proxyInterfaces.size()]);
 
-            ProxyProvider cglibProvider = new CglibProvider();
-            Object cglibObj = cglibProvider.createInterceptorProxy(src, serviceHandler,proxyClazz);
-            return cglibObj;
-        }catch (ClassNotFoundException ex){
-            throw new RuntimeException(bd.getBeanClassName()+"没有找到",ex);
+        Class<?> beanClass = src.getClass();
+        Class<?>[] interfaces = beanClass.getInterfaces();
+        Set<Class<?>> proxyInterfaces = Sets.newLinkedHashSet();
+        for (int i = 0; i < interfaces.length; i++) {
+            Annotation annotation = interfaces[i].getAnnotation(RemoteService.class);
+            if (annotation != null) {
+                proxyInterfaces.add(interfaces[i]);
+            }
         }
+        Preconditions.checkState(proxyInterfaces.size() > 0, "Grpc服务接口缺少RemoteService注解");
+        ServiceHandler serviceHandler = new ServiceHandler(proxyInterfaces.toArray(new Class<?>[proxyInterfaces.size()]));
+        proxyInterfaces.add(io.grpc.BindableService.class);
+        Class<?>[] proxyClazz = proxyInterfaces.toArray(new Class[proxyInterfaces.size()]);
+
+        ProxyProvider cglibProvider = new CglibProvider();
+        Object cglibObj = cglibProvider.createInterceptorProxy(src, serviceHandler, proxyClazz);
+        return cglibObj;
     }
 
     @Override

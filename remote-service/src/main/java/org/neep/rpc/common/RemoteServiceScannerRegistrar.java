@@ -37,7 +37,7 @@ public class RemoteServiceScannerRegistrar implements ImportBeanDefinitionRegist
         ClassPathBeanDefinitionScannerEx classPathBeanDefinitionScannerEx = new ClassPathBeanDefinitionScannerEx(beanDefinitionRegistry);
         DoScanImpl scanner = new DoScanImpl();
         classPathBeanDefinitionScannerEx.setScanner(scanner);
-
+        classPathBeanDefinitionScannerEx.setBeanNameGenerator(new AnnotationBeanNameGeneratorEx());
         classPathBeanDefinitionScannerEx.registerFilters();
 
         String[] basePackages = this.getBasePackages(annoAttrs);

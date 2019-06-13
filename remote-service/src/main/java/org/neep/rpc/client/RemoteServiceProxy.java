@@ -25,7 +25,10 @@ public class RemoteServiceProxy <T>  implements ObjectInvoker,Serializable {
 
     @Override
     public Object invoke(Object proxy, Method method, Object... arguments) throws Throwable {
-        System.out.println(method.toGenericString()+"JDK Proxy");
+        if (method.getName().equals("toString")){
+            return proxy.getClass().getInterfaces()[0].getName();
+        }
+        System.out.println(method.toGenericString()+"..................JDK Proxy");
         return null;
     }
 }
