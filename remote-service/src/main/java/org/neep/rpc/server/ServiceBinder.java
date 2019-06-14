@@ -1,6 +1,8 @@
 package org.neep.rpc.server;
 
+import io.grpc.MethodDescriptor;
 import io.grpc.ServerServiceDefinition;
+import io.grpc.ServiceDescriptor;
 
 /**
  * @Title AbstractBindableService
@@ -23,5 +25,13 @@ public class ServiceBinder implements  io.grpc.BindableService{
     public ServerServiceDefinition bindService() {
         System.out.println("ServiceBinder execute ............................");
         return null;
+    }
+
+    private MethodDescriptor createMethodDescriptor(){
+        return null;
+    }
+
+    private ServiceDescriptor createServiceDescriptor(){
+        return  null;
     }
 }

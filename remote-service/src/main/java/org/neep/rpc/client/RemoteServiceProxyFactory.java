@@ -2,6 +2,7 @@ package org.neep.rpc.client;
 
 
 import org.neep.proxy.api.ProxyProvider;
+import org.neep.proxy.impl.cglib.CglibProvider;
 import org.neep.proxy.impl.jdk.JdkProxyProvider;
 
 /**
@@ -19,12 +20,11 @@ public class RemoteServiceProxyFactory<T> {
     private  final ProxyProvider proxyProvider;
     public RemoteServiceProxyFactory(Class<T> serviceInterface) {
         this.serviceInterface = serviceInterface;
-        this.proxyProvider = new JdkProxyProvider();
+        this.proxyProvider = new CglibProvider();
     }
     public T newInstance(){
-
         T instance =  this.proxyProvider.<T>createInvokerProxy(this.serviceInterface.getClassLoader(),
-                new RemoteServiceProxy<T>(this.serviceInterface),  this.serviceInterface);
+                new RemoteServiceProxy<T>(this.serviceInterface),  this.serviceInterface,ClientProxy.class);
         return instance;
     }
 

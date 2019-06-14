@@ -17,6 +17,15 @@ public class CommonMethodHandlers implements
         io.grpc.stub.ServerCalls.ClientStreamingMethod,
         io.grpc.stub.ServerCalls.BidiStreamingMethod {
 
+    private final Object instance;
+
+    private final String methodName;
+
+    public CommonMethodHandlers(Object instance, String methodName) {
+        this.instance = instance;
+        this.methodName = methodName;
+    }
+
     @Override
     public StreamObserver invoke(StreamObserver streamObserver) {
         return null;

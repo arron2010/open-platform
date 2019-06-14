@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package proto;
+option java_multiple_files = false;
+option java_package = "org.neep.rpc.msg.entity";
+option java_outer_classname = "RpcMsg";
+message Message {
+    bytes content =1;
+    bool result = 2;
+    string resultText =3;
+}
