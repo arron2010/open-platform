@@ -4,7 +4,7 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.Sets;
 import org.neep.proxy.api.ProxyProvider;
 import org.neep.proxy.impl.cglib.CglibProvider;
-import org.neep.rpc.common.RemoteService;
+import org.neep.rpc.anno.RemoteService;
 import org.neep.spring.ext.api.IBeanInitializer;
 import org.neep.utils.reflect.ReflectionHelper;
 import org.springframework.beans.factory.BeanFactory;

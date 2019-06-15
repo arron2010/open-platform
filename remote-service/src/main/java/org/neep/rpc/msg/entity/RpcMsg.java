@@ -37,6 +37,16 @@ public final class RpcMsg {
      */
     com.google.protobuf.ByteString
         getResultTextBytes();
+
+    /**
+     * <code>string msgType = 4;</code>
+     */
+    String getMsgType();
+    /**
+     * <code>string msgType = 4;</code>
+     */
+    com.google.protobuf.ByteString
+        getMsgTypeBytes();
   }
   /**
    * Protobuf type {@code proto.Message}
@@ -53,6 +63,7 @@ public final class RpcMsg {
       content_ = com.google.protobuf.ByteString.EMPTY;
       result_ = false;
       resultText_ = "";
+      msgType_ = "";
     }
 
     @Override
@@ -96,6 +107,12 @@ public final class RpcMsg {
               resultText_ = s;
               break;
             }
+            case 34: {
+              String s = input.readStringRequireUtf8();
+
+              msgType_ = s;
+              break;
+            }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
@@ -109,14 +126,14 @@ public final class RpcMsg {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return RpcMsg.internal_static_proto_Message_descriptor;
+      return org.neep.rpc.msg.entity.RpcMsg.internal_static_proto_Message_descriptor;
     }
 
     protected FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return RpcMsg.internal_static_proto_Message_fieldAccessorTable
+      return org.neep.rpc.msg.entity.RpcMsg.internal_static_proto_Message_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              Message.class, Builder.class);
+              org.neep.rpc.msg.entity.RpcMsg.Message.class, org.neep.rpc.msg.entity.RpcMsg.Message.Builder.class);
     }
 
     public static final int CONTENT_FIELD_NUMBER = 1;
@@ -147,7 +164,7 @@ public final class RpcMsg {
       if (ref instanceof String) {
         return (String) ref;
       } else {
-        com.google.protobuf.ByteString bs = 
+        com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
         String s = bs.toStringUtf8();
         resultText_ = s;
@@ -161,10 +178,44 @@ public final class RpcMsg {
         getResultTextBytes() {
       Object ref = resultText_;
       if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
+        com.google.protobuf.ByteString b =
             com.google.protobuf.ByteString.copyFromUtf8(
                 (String) ref);
         resultText_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int MSGTYPE_FIELD_NUMBER = 4;
+    private volatile Object msgType_;
+    /**
+     * <code>string msgType = 4;</code>
+     */
+    public String getMsgType() {
+      Object ref = msgType_;
+      if (ref instanceof String) {
+        return (String) ref;
+      } else {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        String s = bs.toStringUtf8();
+        msgType_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string msgType = 4;</code>
+     */
+    public com.google.protobuf.ByteString
+        getMsgTypeBytes() {
+      Object ref = msgType_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b =
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (String) ref);
+        msgType_ = b;
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
@@ -192,6 +243,9 @@ public final class RpcMsg {
       if (!getResultTextBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 3, resultText_);
       }
+      if (!getMsgTypeBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 4, msgType_);
+      }
     }
 
     public int getSerializedSize() {
@@ -210,6 +264,9 @@ public final class RpcMsg {
       if (!getResultTextBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, resultText_);
       }
+      if (!getMsgTypeBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, msgType_);
+      }
       memoizedSize = size;
       return size;
     }
@@ -220,10 +277,10 @@ public final class RpcMsg {
       if (obj == this) {
        return true;
       }
-      if (!(obj instanceof Message)) {
+      if (!(obj instanceof org.neep.rpc.msg.entity.RpcMsg.Message)) {
         return super.equals(obj);
       }
-      Message other = (Message) obj;
+      org.neep.rpc.msg.entity.RpcMsg.Message other = (org.neep.rpc.msg.entity.RpcMsg.Message) obj;
 
       boolean result = true;
       result = result && getContent()
@@ -232,6 +289,8 @@ public final class RpcMsg {
           == other.getResult());
       result = result && getResultText()
           .equals(other.getResultText());
+      result = result && getMsgType()
+          .equals(other.getMsgType());
       return result;
     }
 
@@ -249,74 +308,76 @@ public final class RpcMsg {
           getResult());
       hash = (37 * hash) + RESULTTEXT_FIELD_NUMBER;
       hash = (53 * hash) + getResultText().hashCode();
+      hash = (37 * hash) + MSGTYPE_FIELD_NUMBER;
+      hash = (53 * hash) + getMsgType().hashCode();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
     }
 
-    public static Message parseFrom(
+    public static org.neep.rpc.msg.entity.RpcMsg.Message parseFrom(
         java.nio.ByteBuffer data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static Message parseFrom(
+    public static org.neep.rpc.msg.entity.RpcMsg.Message parseFrom(
         java.nio.ByteBuffer data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static Message parseFrom(
+    public static org.neep.rpc.msg.entity.RpcMsg.Message parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static Message parseFrom(
+    public static org.neep.rpc.msg.entity.RpcMsg.Message parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static Message parseFrom(byte[] data)
+    public static org.neep.rpc.msg.entity.RpcMsg.Message parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static Message parseFrom(
+    public static org.neep.rpc.msg.entity.RpcMsg.Message parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static Message parseFrom(java.io.InputStream input)
+    public static org.neep.rpc.msg.entity.RpcMsg.Message parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static Message parseFrom(
+    public static org.neep.rpc.msg.entity.RpcMsg.Message parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
-    public static Message parseDelimitedFrom(java.io.InputStream input)
+    public static org.neep.rpc.msg.entity.RpcMsg.Message parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input);
     }
-    public static Message parseDelimitedFrom(
+    public static org.neep.rpc.msg.entity.RpcMsg.Message parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
-    public static Message parseFrom(
+    public static org.neep.rpc.msg.entity.RpcMsg.Message parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static Message parseFrom(
+    public static org.neep.rpc.msg.entity.RpcMsg.Message parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -328,7 +389,7 @@ public final class RpcMsg {
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-    public static Builder newBuilder(Message prototype) {
+    public static Builder newBuilder(org.neep.rpc.msg.entity.RpcMsg.Message prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() {
@@ -348,17 +409,17 @@ public final class RpcMsg {
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
         // @@protoc_insertion_point(builder_implements:proto.Message)
-        MessageOrBuilder {
+        org.neep.rpc.msg.entity.RpcMsg.MessageOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return RpcMsg.internal_static_proto_Message_descriptor;
+        return org.neep.rpc.msg.entity.RpcMsg.internal_static_proto_Message_descriptor;
       }
 
       protected FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return RpcMsg.internal_static_proto_Message_fieldAccessorTable
+        return org.neep.rpc.msg.entity.RpcMsg.internal_static_proto_Message_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                Message.class, Builder.class);
+                org.neep.rpc.msg.entity.RpcMsg.Message.class, org.neep.rpc.msg.entity.RpcMsg.Message.Builder.class);
       }
 
       // Construct using org.neep.rpc.msg.entity.RpcMsg.Message.newBuilder()
@@ -384,31 +445,34 @@ public final class RpcMsg {
 
         resultText_ = "";
 
+        msgType_ = "";
+
         return this;
       }
 
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return RpcMsg.internal_static_proto_Message_descriptor;
+        return org.neep.rpc.msg.entity.RpcMsg.internal_static_proto_Message_descriptor;
       }
 
-      public Message getDefaultInstanceForType() {
-        return Message.getDefaultInstance();
+      public org.neep.rpc.msg.entity.RpcMsg.Message getDefaultInstanceForType() {
+        return org.neep.rpc.msg.entity.RpcMsg.Message.getDefaultInstance();
       }
 
-      public Message build() {
-        Message result = buildPartial();
+      public org.neep.rpc.msg.entity.RpcMsg.Message build() {
+        org.neep.rpc.msg.entity.RpcMsg.Message result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-      public Message buildPartial() {
-        Message result = new Message(this);
+      public org.neep.rpc.msg.entity.RpcMsg.Message buildPartial() {
+        org.neep.rpc.msg.entity.RpcMsg.Message result = new org.neep.rpc.msg.entity.RpcMsg.Message(this);
         result.content_ = content_;
         result.result_ = result_;
         result.resultText_ = resultText_;
+        result.msgType_ = msgType_;
         onBuilt();
         return result;
       }
@@ -440,16 +504,16 @@ public final class RpcMsg {
         return (Builder) super.addRepeatedField(field, value);
       }
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof Message) {
-          return mergeFrom((Message)other);
+        if (other instanceof org.neep.rpc.msg.entity.RpcMsg.Message) {
+          return mergeFrom((org.neep.rpc.msg.entity.RpcMsg.Message)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(Message other) {
-        if (other == Message.getDefaultInstance()) return this;
+      public Builder mergeFrom(org.neep.rpc.msg.entity.RpcMsg.Message other) {
+        if (other == org.neep.rpc.msg.entity.RpcMsg.Message.getDefaultInstance()) return this;
         if (other.getContent() != com.google.protobuf.ByteString.EMPTY) {
           setContent(other.getContent());
         }
@@ -458,6 +522,10 @@ public final class RpcMsg {
         }
         if (!other.getResultText().isEmpty()) {
           resultText_ = other.resultText_;
+          onChanged();
+        }
+        if (!other.getMsgType().isEmpty()) {
+          msgType_ = other.msgType_;
           onChanged();
         }
         onChanged();
@@ -472,11 +540,11 @@ public final class RpcMsg {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        Message parsedMessage = null;
+        org.neep.rpc.msg.entity.RpcMsg.Message parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (Message) e.getUnfinishedMessage();
+          parsedMessage = (org.neep.rpc.msg.entity.RpcMsg.Message) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -500,7 +568,7 @@ public final class RpcMsg {
         if (value == null) {
     throw new NullPointerException();
   }
-  
+
         content_ = value;
         onChanged();
         return this;
@@ -509,7 +577,7 @@ public final class RpcMsg {
        * <code>bytes content = 1;</code>
        */
       public Builder clearContent() {
-        
+
         content_ = getDefaultInstance().getContent();
         onChanged();
         return this;
@@ -526,7 +594,7 @@ public final class RpcMsg {
        * <code>bool result = 2;</code>
        */
       public Builder setResult(boolean value) {
-        
+
         result_ = value;
         onChanged();
         return this;
@@ -535,7 +603,7 @@ public final class RpcMsg {
        * <code>bool result = 2;</code>
        */
       public Builder clearResult() {
-        
+
         result_ = false;
         onChanged();
         return this;
@@ -564,7 +632,7 @@ public final class RpcMsg {
           getResultTextBytes() {
         Object ref = resultText_;
         if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString b =
               com.google.protobuf.ByteString.copyFromUtf8(
                   (String) ref);
           resultText_ = b;
@@ -581,7 +649,7 @@ public final class RpcMsg {
         if (value == null) {
     throw new NullPointerException();
   }
-  
+
         resultText_ = value;
         onChanged();
         return this;
@@ -590,7 +658,7 @@ public final class RpcMsg {
        * <code>string resultText = 3;</code>
        */
       public Builder clearResultText() {
-        
+
         resultText_ = getDefaultInstance().getResultText();
         onChanged();
         return this;
@@ -604,8 +672,77 @@ public final class RpcMsg {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
-        
+
         resultText_ = value;
+        onChanged();
+        return this;
+      }
+
+      private Object msgType_ = "";
+      /**
+       * <code>string msgType = 4;</code>
+       */
+      public String getMsgType() {
+        Object ref = msgType_;
+        if (!(ref instanceof String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          String s = bs.toStringUtf8();
+          msgType_ = s;
+          return s;
+        } else {
+          return (String) ref;
+        }
+      }
+      /**
+       * <code>string msgType = 4;</code>
+       */
+      public com.google.protobuf.ByteString
+          getMsgTypeBytes() {
+        Object ref = msgType_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b =
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (String) ref);
+          msgType_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string msgType = 4;</code>
+       */
+      public Builder setMsgType(
+          String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+
+        msgType_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string msgType = 4;</code>
+       */
+      public Builder clearMsgType() {
+
+        msgType_ = getDefaultInstance().getMsgType();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string msgType = 4;</code>
+       */
+      public Builder setMsgTypeBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+
+        msgType_ = value;
         onChanged();
         return this;
       }
@@ -624,12 +761,12 @@ public final class RpcMsg {
     }
 
     // @@protoc_insertion_point(class_scope:proto.Message)
-    private static final Message DEFAULT_INSTANCE;
+    private static final org.neep.rpc.msg.entity.RpcMsg.Message DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new Message();
+      DEFAULT_INSTANCE = new org.neep.rpc.msg.entity.RpcMsg.Message();
     }
 
-    public static Message getDefaultInstance() {
+    public static org.neep.rpc.msg.entity.RpcMsg.Message getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
@@ -652,7 +789,7 @@ public final class RpcMsg {
       return PARSER;
     }
 
-    public Message getDefaultInstanceForType() {
+    public org.neep.rpc.msg.entity.RpcMsg.Message getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -660,7 +797,7 @@ public final class RpcMsg {
 
   private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_proto_Message_descriptor;
-  private static final 
+  private static final
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_proto_Message_fieldAccessorTable;
 
@@ -672,10 +809,10 @@ public final class RpcMsg {
       descriptor;
   static {
     String[] descriptorData = {
-      "\n\024message/RpcMsg.proto\022\005proto\">\n\007Message" +
+      "\n\024message/RpcMsg.proto\022\005proto\"O\n\007Message" +
       "\022\017\n\007content\030\001 \001(\014\022\016\n\006result\030\002 \001(\010\022\022\n\nres" +
-      "ultText\030\003 \001(\tB#\n\027org.neep.rpc.msg.entity" +
-      "B\006RpcMsgP\000b\006proto3"
+      "ultText\030\003 \001(\t\022\017\n\007msgType\030\004 \001(\tB#\n\027org.ne" +
+      "ep.rpc.msg.entityB\006RpcMsgP\000b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -694,7 +831,7 @@ public final class RpcMsg {
     internal_static_proto_Message_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_Message_descriptor,
-        new String[] { "Content", "Result", "ResultText", });
+        new String[] { "Content", "Result", "ResultText", "MsgType", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

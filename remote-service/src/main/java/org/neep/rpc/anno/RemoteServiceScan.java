@@ -1,6 +1,7 @@
-package org.neep.rpc.common;
+package org.neep.rpc.anno;
 
 
+import org.neep.rpc.common.RemoteServiceScannerRegistrar;
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.*;

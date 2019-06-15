@@ -1,5 +1,6 @@
 package org.neep.rpc.common;
 
+import org.neep.rpc.anno.RemoteServiceScan;
 import org.neep.spring.ext.annotation.ClassPathBeanDefinitionScannerEx;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.context.ResourceLoaderAware;

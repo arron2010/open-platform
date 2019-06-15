@@ -8,4 +8,5 @@ message Message {
     bytes content =1;
     bool result = 2;
     string resultText =3;
+    string msgType=4;
 }

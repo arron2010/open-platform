@@ -1,5 +1,6 @@
 package org.neep.rpc.common;
 
+import org.neep.rpc.anno.RemoteService;
 import org.neep.rpc.client.RemoteServiceFactoryBean;
 import org.neep.rpc.client.RemoteServiceRegistry;
 import org.neep.spring.ext.api.IDoScan;

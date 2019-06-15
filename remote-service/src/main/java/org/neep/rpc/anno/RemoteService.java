@@ -1,4 +1,4 @@
-package org.neep.rpc.common;
+package org.neep.rpc.anno;
 
 import java.lang.annotation.*;
 

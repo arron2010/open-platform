@@ -3,7 +3,7 @@ package org.neep.rpc.client;
 import io.grpc.CallOptions;
 import io.grpc.Channel;
 import io.grpc.MethodDescriptor;
-import io.grpc.stub.AbstractStub;
+import org.neep.rpc.ext.AbstractStub;
 
 /**
  * @Title ClientProxy
@@ -14,7 +14,12 @@ import io.grpc.stub.AbstractStub;
  * @Version 1.0.0
  * @Create 19-6-14 下午7:39
  */
-public class ClientProxy extends io.grpc.stub.AbstractStub {
+public class ClientProxy extends AbstractStub {
+
+    public ClientProxy() {
+
+    }
+
     public ClientProxy(Channel channel) {
         super(channel);
     }

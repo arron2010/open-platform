@@ -1,19 +1,21 @@
 package org.neep.rpc.client;
 
 
-
-import io.grpc.BindableService;
 import io.grpc.MethodDescriptor;
 import org.neep.proxy.api.ObjectInvoker;
+import org.neep.rpc.msg.anno.MessageType;
+import org.neep.rpc.msg.entity.MsgTypeConstants;
+import org.neep.rpc.msg.entity.RemoteEntity;
 import org.neep.rpc.msg.entity.RpcMsg;
 import org.neep.utils.exceptions.RemoteServiceException;
 import org.neep.utils.reflect.ReflectionHelper;
+import org.springframework.core.annotation.AnnotationUtils;
 
 import java.io.Serializable;
 import java.lang.reflect.Method;
 
 import static io.grpc.stub.ClientCalls.blockingUnaryCall;
-
+import static org.neep.rpc.common.GrpcHelper.*;
 /**
  * @Title RemoteServiceProxy
  * @Description
@@ -43,23 +45,42 @@ public class RemoteServiceProxy <T>  implements ObjectInvoker,Serializable {
             throw new RemoteServiceException("未找到服务"+method.toGenericString());
         }
         ClientProxy clientProxy = (ClientProxy)proxy;
-        RpcMsg.Message response = (RpcMsg.Message)blockingUnaryCall(clientProxy.getChannel(),this.createMethodDescriptor(),clientProxy.getCallOptions(),this.createRpcMsg(arguments[0]));
-        if (response.getResult()){
-            Object objResult = this.getReturnObject(response);
-            return objResult;
+        String msgType = this.getMsgTypeValue(arguments[0]);
+        RpcMsg.Message request =   this.createRpcMsg(msgType,arguments[0]);
+
+        RpcMsg.Message response = (RpcMsg.Message)blockingUnaryCall(clientProxy.getChannel(),
+                this.createMethodDescriptor(method),
+                clientProxy.getCallOptions(),
+                request);
+        Object objResult = this.getReturnObject(response);
+        if (objResult instanceof RemoteEntity){
+            RemoteEntity remoteEntity = (RemoteEntity)objResult;
+            if (remoteEntity.isSuccess()){
+                return objResult;
+            }else{
+                throw new RemoteServiceException(method.toGenericString()+"远程调用失败。原因："+remoteEntity.getMessage());
+            }
+        }
+        return objResult;
+    }
+    private String getMsgTypeValue(Object  inputObj ){
+        MessageType messageType= AnnotationUtils.getAnnotation(inputObj.getClass(),MessageType.class);
+        if (messageType != null){
+            return  messageType.value();
         }else{
-            throw new RemoteServiceException(method.toGenericString()+"远程调用失败。原因："+response.getResultText());
+            return MsgTypeConstants.PROTOBUF;
         }
     }
-    private MethodDescriptor createMethodDescriptor(){
-        return null;
+
+    private MethodDescriptor createMethodDescriptor(Method method) throws RemoteServiceException{
+        return getMethodDescriptor(this.serviceInterface,method);
     }
 
-    private RpcMsg.Message createRpcMsg(Object source){
-        return null;
+    private synchronized RpcMsg.Message createRpcMsg(String msgType,Object source)  throws RemoteServiceException{
+        return getGrpcMessage(msgType,source);
     }
 
-    private RpcMsg getReturnObject( RpcMsg.Message  response){
-        return null;
+    private synchronized Object getReturnObject( RpcMsg.Message  response){
+        return restoreFromGrpcMessage(response);
     }
 }

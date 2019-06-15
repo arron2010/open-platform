@@ -2,6 +2,7 @@ package org.neep.rpc.common;
 
 import com.google.common.base.CharMatcher;
 import com.google.common.base.Strings;
+import org.neep.utils.tools.StringHelper;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.context.annotation.AnnotationBeanNameGenerator;
@@ -22,16 +23,11 @@ public class AnnotationBeanNameGeneratorEx extends AnnotationBeanNameGenerator {
     protected String buildDefaultBeanName(BeanDefinition definition, BeanDefinitionRegistry registry) {
         String beanName = super.buildDefaultBeanName(definition,registry);
         String newName=CharMatcher.is('I').trimLeadingFrom(beanName);
-        newName = capitalFirst(newName);
+        newName = StringHelper.capitalFirst(newName);
 
         newName +="#proxy";
         return newName;
     }
 
-    private String capitalFirst(String name) {
-        if (!Strings.isNullOrEmpty(name)) {
-            return name.substring(0, 1).toLowerCase() + name.substring(1);
-        }
-        return "";
-    }
+
 }

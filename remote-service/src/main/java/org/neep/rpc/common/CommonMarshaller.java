@@ -1,4 +1,4 @@
-package org.neep.rpc.server;
+package org.neep.rpc.common;
 
 import io.grpc.MethodDescriptor;
 
