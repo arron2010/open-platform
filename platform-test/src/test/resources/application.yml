@@ -1,0 +1,74 @@
+#spring:
+#  profiles:
+#    active: dev
+server:
+   port: 8763 # 服务的端口号
+   servlet:
+     context-path: /
+   tomcat:
+     uri-encoding: UTF-8
+
+#grpc:
+#  server:
+#    port: 9763  # grpc 端口
+#  client:
+#  # 配置自己为客户端
+#   baseplatformserver:
+#    host: 127.0.0.1
+#    port: 9763
+#  # 配置串标为客户端
+#   bidmoduleserver:
+#    host: 127.0.0.1
+#    port: 9764
+
+#grpc:
+grpc:
+  server:
+    port: 9763  # grpc 端口
+    maxInboundMessageSize: 300000000
+  client:
+    platformtest:
+       address: 'static://127.0.0.1:9761'
+       maxInboundMessageSize: 300000000
+       enableKeepAlive: true
+       keepAliveWithoutCalls: true
+       negotiationType: plaintext
+
+###################  mybatis-plus配置  ###################
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #打印sql语句,调试用
+#####################################
+
+
+######################sl4j日志配置#####################
+logging:
+#  pattern:
+#    console: %d{yyyy-MM-dd HH:mm:ss} [%l]- [%p]  %m%n
+  #path: e:/
+#  file: e:/sell.log
+  level:
+    #这里可以是包名也可以是类名
+    com.neep: debug
+###########################################################
+
+
+spring:
+  application:
+    name: platformtest # grpc服务名称
+  output:
+    ansi:
+      enabled: always # 带颜色的输出
+  jpa:
+    show-sql: true
+
+
+
+  http:
+    encoding:
+      charset: utf-8
+      force: true
+      enabled: true
+  profiles:
+    active: dev
+
