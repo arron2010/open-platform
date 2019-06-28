@@ -3,6 +3,18 @@ package org.neep.rpc.server;
 import io.grpc.MethodDescriptor;
 import io.grpc.ServerServiceDefinition;
 import io.grpc.ServiceDescriptor;
+import io.grpc.stub.ServerCalls;
+import org.neep.proxy.api.Invocation;
+import org.neep.rpc.anno.RemoteService;
+import org.neep.utils.exceptions.RemoteServiceException;
+import org.neep.utils.reflect.ReflectionHelper;
+
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.neep.rpc.common.GrpcHelper.getMethodDescriptor;
+import static org.neep.rpc.common.GrpcHelper.getServiceName;
 
 /**
  * @Title AbstractBindableService
@@ -15,23 +27,70 @@ import io.grpc.ServiceDescriptor;
  */
 public class ServiceBinder implements  io.grpc.BindableService{
 
-    private final Object serviceInstance ;
+    private final Invocation invocation;
 
-    public ServiceBinder(Object serviceInstance) {
-        this.serviceInstance = serviceInstance;
+    public ServiceBinder(Invocation invocation) {
+        this.invocation = invocation;
     }
 
     @Override
     public ServerServiceDefinition bindService() {
-        System.out.println("ServiceBinder execute ............................");
-        return null;
+        Class serviceInterface = ReflectionHelper.findInterfaceByAnno(invocation.getProxy().getClass(),RemoteService.class);
+        if (serviceInterface == null)
+            throw new RemoteServiceException("类型"+invocation.getProxy().getClass().getName()+"没有RemoteService注解");
+
+        ServiceDescriptor.Builder serviceBuilder = ServiceDescriptor.newBuilder(getServiceName(serviceInterface));
+        List<MethodInfo> methodDescriptorList = this.createMethodDescriptor(serviceInterface);
+        for (MethodInfo methodDescriptor : methodDescriptorList){
+            serviceBuilder.addMethod(methodDescriptor.getMethodDescriptor());
+        }
+        ServerServiceDefinition.Builder  builder = ServerServiceDefinition.builder(serviceBuilder.build());
+
+        for (MethodInfo methodDescriptor : methodDescriptorList){
+            CommonMethodHandlers handlers = new CommonMethodHandlers(invocation.getProxy(),methodDescriptor.getMethod());
+            builder.addMethod(methodDescriptor.getMethodDescriptor(),ServerCalls.asyncUnaryCall(handlers));
+        }
+        ServerServiceDefinition serverServiceDefinition = builder.build();
+
+      //  System.out.println("ServiceBinder execute ............................");
+        return serverServiceDefinition;
     }
 
-    private MethodDescriptor createMethodDescriptor(){
-        return null;
+//    private String getServiceName(Class<?> serviceInterface){
+//        String className = serviceInterface.getName();
+//        String[] nameArray = Splitter.on(".").splitToList(className).toArray(new String[]{});
+//        return nameArray[nameArray.length-2]+"."+nameArray[nameArray.length-1];
+//    }
+    private List<MethodInfo> createMethodDescriptor(Class<?> serviceInterface){
+        Method[] methods =serviceInterface.getDeclaredMethods();
+        List<MethodInfo> methodDescriptorList = new ArrayList<>();
+        for (int i=0;i < methods.length;i++){
+            methodDescriptorList.add(
+                    new MethodInfo(getMethodDescriptor(serviceInterface,methods[i]),methods[i])
+                    );
+        }
+        return methodDescriptorList;
     }
 
-    private ServiceDescriptor createServiceDescriptor(){
-        return  null;
+    private class MethodInfo{
+        private final MethodDescriptor methodDescriptor;
+        private final Method method;
+
+        public MethodInfo(MethodDescriptor methodDescriptor, Method method) {
+            this.methodDescriptor = methodDescriptor;
+            this.method = method;
+        }
+
+        public MethodDescriptor getMethodDescriptor() {
+            return methodDescriptor;
+        }
+
+        public Method getMethod() {
+            return method;
+        }
     }
+//
+//    private ServiceDescriptor createServiceDescriptor( MethodDescriptor methodDescriptor ){
+//        return  null;
+//    }
 }

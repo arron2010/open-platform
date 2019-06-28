@@ -1,6 +1,14 @@
 package org.neep.rpc.server;
 
 import io.grpc.stub.StreamObserver;
+import org.neep.rpc.msg.entity.RpcMsg;
+import org.springframework.util.ReflectionUtils;
+
+import java.lang.reflect.Method;
+
+import static org.neep.rpc.common.GrpcHelper.getGrpcMessage;
+import static org.neep.rpc.common.GrpcHelper.getMsgTypeValue;
+import static org.neep.rpc.common.GrpcHelper.restoreFromGrpcMessage;
 
 /**
  * @Title CommonMethodHandlers
@@ -19,11 +27,13 @@ public class CommonMethodHandlers implements
 
     private final Object instance;
 
-    private final String methodName;
+    private final Method method;
 
-    public CommonMethodHandlers(Object instance, String methodName) {
+
+
+    public CommonMethodHandlers(Object instance, Method method) {
         this.instance = instance;
-        this.methodName = methodName;
+        this.method = method;
     }
 
     @Override
@@ -33,6 +43,19 @@ public class CommonMethodHandlers implements
 
     @Override
     public void invoke(Object o, StreamObserver streamObserver) {
+        if (o instanceof  RpcMsg.Message){
+            RpcMsg.Message msg = (RpcMsg.Message)o;
+            Object entity =restoreFromGrpcMessage(msg);
+            Object result =ReflectionUtils.invokeMethod(this.method,this.instance,entity);
+            if (result != null){
+                String msgType = getMsgTypeValue(result);
+                RpcMsg.Message response =  getGrpcMessage(msgType,result);
+//                System.out.println(result);
+                streamObserver.onNext(response);
+                streamObserver.onCompleted();
+            }
+
+        }
 
     }
 }

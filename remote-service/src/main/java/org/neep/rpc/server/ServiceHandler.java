@@ -33,16 +33,16 @@ public class ServiceHandler implements Interceptor {
         //拦截代理对象BindService调用，委托给具体实现类
         boolean foundBindService = ReflectionHelper.existMethod(invocation.getMethod(),BindableService.class);
         if (foundBindService){
-            BindableService  bindableService = new ServiceBinder(invocation.getProxy());
+            BindableService  bindableService = new ServiceBinder(invocation);
             return bindableService.bindService();
         }
 
-        //拦截代理对象远程调用方法，委托给提交者，进行消息提交
-        boolean remoteMethodFound = ReflectionHelper.existMethod(invocation.getMethod(),  this.remoteInterfaces );
-        if (remoteMethodFound){
-            ServiceCommitter committer = new ServiceCommitter(invocation);
-            return committer.commit();
-        }
+//        //拦截代理对象远程调用方法，委托给提交者，进行消息提交
+//        boolean remoteMethodFound = ReflectionHelper.existMethod(invocation.getMethod(),  this.remoteInterfaces );
+//        if (remoteMethodFound){
+//            ServiceCommitter committer = new ServiceCommitter(invocation);
+//            return committer.commit();
+//        }
 
         Object result = invocation.proceed();
         return result;

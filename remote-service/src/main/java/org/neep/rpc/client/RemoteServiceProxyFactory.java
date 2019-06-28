@@ -1,10 +1,8 @@
 package org.neep.rpc.client;
 
 
-import net.devh.boot.grpc.client.channelfactory.GrpcChannelFactory;
 import org.neep.proxy.api.ProxyProvider;
 import org.neep.proxy.impl.cglib.CglibProvider;
-import org.neep.proxy.impl.jdk.JdkProxyProvider;
 
 /**
  * @Title RemoteServiceMethod

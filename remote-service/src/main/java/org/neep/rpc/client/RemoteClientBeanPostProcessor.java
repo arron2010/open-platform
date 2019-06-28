@@ -2,6 +2,7 @@ package org.neep.rpc.client;
 
 import com.google.common.base.CharMatcher;
 import com.google.common.base.Splitter;
+import io.grpc.CallOptions;
 import io.grpc.Channel;
 import io.grpc.ClientInterceptor;
 import net.devh.boot.grpc.client.channelfactory.GrpcChannelFactory;
@@ -63,6 +64,7 @@ public class RemoteClientBeanPostProcessor implements BeanPostProcessor {
                     //暂时创建空ClientInterceptor List
                     final Channel chanel = this.createChannel(path,new ArrayList<ClientInterceptor>());
                     this.setChanelField(serviceType,chanel);
+                    this.setCallOptionsField(serviceType,CallOptions.DEFAULT);
                 }
             }
             clazz = clazz.getSuperclass();
@@ -83,17 +85,26 @@ public class RemoteClientBeanPostProcessor implements BeanPostProcessor {
     }
 
     private void  setChanelField(Class<?> serviceType,Channel channel){
+        this.setFieldValue(serviceType,channel,"channel");
+    }
+
+    private void setCallOptionsField(Class<?> serviceType, CallOptions callOptions ){
+        this.setFieldValue(serviceType,callOptions,"callOptions");
+    }
+
+
+    private  void setFieldValue(Class<?> serviceType,Object fieldValue,String fieldName){
         String beanName = StringHelper.getBeanNameByClass(serviceType.getName());
         Object serviceObj = this.applicationContext.getBean(beanName);
         if (serviceObj == null ){
             throw new RemoteBeansException(beanName+"对象不存在");
         }
-        Field field = ReflectionUtils.findField(serviceObj.getClass(),"channel");
+        Field field = ReflectionUtils.findField(serviceObj.getClass(),fieldName);
         if (field == null){
-            throw new RemoteBeansException(beanName+"对象无chanel字段");
+            throw new RemoteBeansException(beanName+"对象无"+fieldName+"字段");
         }
         ReflectionUtils.makeAccessible(field);
-        ReflectionUtils.setField(field, serviceObj, channel);
+        ReflectionUtils.setField(field, serviceObj, fieldValue);
     }
 
 

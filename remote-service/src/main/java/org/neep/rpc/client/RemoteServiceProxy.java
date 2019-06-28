@@ -45,7 +45,7 @@ public class RemoteServiceProxy <T>  implements ObjectInvoker,Serializable {
             throw new RemoteServiceException("未找到服务"+method.toGenericString());
         }
         ClientProxy clientProxy = (ClientProxy)proxy;
-        String msgType = this.getMsgTypeValue(arguments[0]);
+        String msgType = getMsgTypeValue(arguments[0]);
         RpcMsg.Message request =   this.createRpcMsg(msgType,arguments[0]);
 
         RpcMsg.Message response = (RpcMsg.Message)blockingUnaryCall(clientProxy.getChannel(),
@@ -63,14 +63,14 @@ public class RemoteServiceProxy <T>  implements ObjectInvoker,Serializable {
         }
         return objResult;
     }
-    private String getMsgTypeValue(Object  inputObj ){
-        MessageType messageType= AnnotationUtils.getAnnotation(inputObj.getClass(),MessageType.class);
-        if (messageType != null){
-            return  messageType.value();
-        }else{
-            return MsgTypeConstants.PROTOBUF;
-        }
-    }
+//    private String getMsgTypeValue(Object  inputObj ){
+//        MessageType messageType= AnnotationUtils.getAnnotation(inputObj.getClass(),MessageType.class);
+//        if (messageType != null){
+//            return  messageType.value();
+//        }else{
+//            return MsgTypeConstants.PROTOBUF;
+//        }
+//    }
 
     private MethodDescriptor createMethodDescriptor(Method method) throws RemoteServiceException{
         return getMethodDescriptor(this.serviceInterface,method);

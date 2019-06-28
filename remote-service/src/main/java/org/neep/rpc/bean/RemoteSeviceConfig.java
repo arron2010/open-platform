@@ -2,16 +2,19 @@ package org.neep.rpc.bean;
 
 import io.grpc.LoadBalancer;
 import io.grpc.NameResolver;
+import io.grpc.NameResolverProvider;
 import net.devh.boot.grpc.client.channelfactory.GrpcChannelConfigurer;
 import net.devh.boot.grpc.client.channelfactory.GrpcChannelFactory;
 import net.devh.boot.grpc.client.config.GrpcChannelsProperties;
 import net.devh.boot.grpc.client.interceptor.GlobalClientInterceptorRegistry;
+import net.devh.boot.grpc.client.nameresolver.StaticNameResolverProvider;
 import org.neep.rpc.client.RemoteClientBeanPostProcessor;
+import org.neep.rpc.common.ConfigMappedNameResolverFactoryEx;
 import org.neep.rpc.common.ShadedNettyChannelFactoryEx;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 
 import java.util.List;
 
@@ -32,8 +35,14 @@ public class RemoteSeviceConfig {
         return new RemoteClientBeanPostProcessor(applicationContext);
     }
 
+
     @Bean
-    //@ConditionalOnExpression("${NEED_ETCD:true}")
+    public io.grpc.NameResolver.Factory grpcNameResolverFactory(GrpcChannelsProperties channelProperties) {
+        return new ConfigMappedNameResolverFactoryEx(channelProperties, NameResolverProvider.asFactory(),
+                StaticNameResolverProvider.STATIC_DEFAULT_URI_MAPPER);
+    }
+
+    @Bean
     public GrpcChannelFactory shadedNettyGrpcChannelFactory(final GrpcChannelsProperties properties,
                                                             final LoadBalancer.Factory loadBalancerFactory,
                                                             final NameResolver.Factory nameResolverFactory,
