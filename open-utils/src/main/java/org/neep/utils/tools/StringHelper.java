@@ -33,4 +33,55 @@ public abstract class StringHelper {
         String temp =CharMatcher.is('I').trimLeadingFrom(str);
         return temp;
     }
+
+    /**
+     *@title
+     *@description 解析GRPC服务名称
+     *@param
+     *@return  java.lang.String
+     *@author  肖鹏
+     *@createDate  19-2-21 上午9:56
+     */
+    public  static String parseServiceName(String name) throws Exception{
+        String[] fieldInfo = name.toString().split("\\.");
+        if (fieldInfo.length < 2){
+            throw new RuntimeException("服务名称格式不规范");
+        }
+        return fieldInfo[1];
+    }
+
+    /**
+     *@title
+     *@description 对重点文本用“【】”包裹
+     *@param
+     *@return  java.lang.String
+     *@author  肖鹏
+     *@createDate  19-7-1 下午1:30
+     */
+    
+    public  static String  wrapText(String text){
+        return "【"+text +"】";
+    }
+
+    static int indexOf(CharSequence cs, CharSequence searchChar, int start) {
+        return cs.toString().indexOf(searchChar.toString(), start);
+    }
+
+
+    public static boolean contains(CharSequence seq, CharSequence searchSeq) {
+        if (seq != null && searchSeq != null) {
+            return indexOf(seq, searchSeq, 0) >= 0;
+        } else {
+            return false;
+        }
+    }
+    public static boolean equals(String cs1, String cs2){
+        if (cs1 == null && cs2 == null){
+            return true;
+        }
+        if (cs1 == null || cs2 == null ){
+            return false;
+        }
+        return cs1.equals(cs2);
+    }
 }

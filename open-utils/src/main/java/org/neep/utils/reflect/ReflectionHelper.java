@@ -41,7 +41,18 @@ public abstract class ReflectionHelper {
         }
         return  false;
     }
-
+    public static Class<?> findInterfaceByAnno(Class<?> clazz, Class<? extends Annotation> target){
+        Class<?>[] interfaces = clazz.getInterfaces();
+        for (int i=0;i < interfaces.length;i++){
+            Annotation annotation= interfaces[i].getAnnotation(target);
+            if (annotation != null){
+                return  interfaces[i];
+            }else{
+                continue;
+            }
+        }
+        return  null;
+    }
 
     /**
      *@title
