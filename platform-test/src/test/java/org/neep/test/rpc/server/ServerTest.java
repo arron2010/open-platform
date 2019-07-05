@@ -34,7 +34,7 @@ public class ServerTest {
     private IUser user1;
     @Test
     public  void testServerProxy(){
-        user.login();
-        user1.login();
+//        user.login();
+//        user1.login();
     }
 }

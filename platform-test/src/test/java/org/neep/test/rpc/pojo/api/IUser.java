@@ -4,5 +4,5 @@ import org.neep.rpc.anno.RemoteService;
 
 @RemoteService
 public interface IUser {
-    void login();
+    UserEntity login(UserEntity userEntity);
 }

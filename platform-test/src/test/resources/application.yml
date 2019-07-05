@@ -24,11 +24,11 @@ server:
 #grpc:
 grpc:
   server:
-    port: 9763  # grpc 端口
+    port: 9098  # grpc 端口
     maxInboundMessageSize: 300000000
   client:
     platformtest:
-       address: 'static://127.0.0.1:9761'
+       address: 'static://127.0.0.1:9098'
        maxInboundMessageSize: 300000000
        enableKeepAlive: true
        keepAliveWithoutCalls: true

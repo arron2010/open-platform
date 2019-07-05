@@ -1,6 +1,10 @@
 package org.neep.test.rpc.pojo;
 
+import net.devh.boot.grpc.server.service.GrpcService;
+import org.neep.rpc.anno.EtcdRegistry;
+import org.neep.rpc.anno.RemotePost;
 import org.neep.test.rpc.pojo.api.IUser;
+import org.neep.test.rpc.pojo.api.UserEntity;
 import org.springframework.stereotype.Service;
 
 /**
@@ -12,10 +16,15 @@ import org.springframework.stereotype.Service;
  * @Version 1.0.0
  * @Create 19-6-12 下午10:23
  */
-@Service
+@RemotePost
 public class UserImpl implements IUser {
+    public UserImpl() {
+    }
+
     @Override
-    public void login() {
-        System.out.println("xiaopeng login");
+    public UserEntity login(UserEntity userEntity) {
+        System.out.println(userEntity.getName());
+        userEntity.setName(userEntity.getName()+"----------------->handle");
+        return userEntity;
     }
 }

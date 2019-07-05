@@ -22,7 +22,7 @@ import org.springframework.stereotype.Component;
         DataSourceAutoConfiguration.class,
         DataSourceTransactionManagerAutoConfiguration.class,
         HibernateJpaAutoConfiguration.class})
-@ComponentScan({"org.neep.rpc.bean","org.neep.test.rpc.pojo"})
+@ComponentScan({"org.neep.rpc.bean","org.neep.test.rpc.pojo","org.neep.etcd.bean"})
 public class RpcStartApp {
     public static void main(String[] args) {
         SpringApplicationEx.run(RpcStartApp.class, args);

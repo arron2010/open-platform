@@ -7,6 +7,7 @@ import org.neep.rpc.anno.RemoteClient;
 import org.neep.rpc.testing.SpringBootTestContextBootstrapperEx;
 import org.neep.test.rpc.RpcStartApp;
 import org.neep.test.rpc.pojo.api.IUser;
+import org.neep.test.rpc.pojo.api.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.BootstrapWith;
@@ -33,7 +34,9 @@ public class GrpcTest01 {
 
     @Test
     public void testClient(){
-        System.out.println(user);
-        user.login();
+        UserEntity userEntity = new UserEntity();
+        userEntity.setName("xiaopeng");
+        user.login(userEntity);
     }
+
 }
