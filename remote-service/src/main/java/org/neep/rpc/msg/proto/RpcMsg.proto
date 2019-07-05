@@ -9,4 +9,6 @@ message Message {
     bool result = 2;
     string resultText =3;
     string msgType=4;
+    string classType =5;
+    string serviceUrl= 6;
 }

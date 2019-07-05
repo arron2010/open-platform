@@ -4,6 +4,7 @@ package org.neep.rpc.server;
 import io.grpc.BindableService;
 import org.neep.proxy.api.Interceptor;
 import org.neep.proxy.api.Invocation;
+import org.neep.rpc.api.IRemoteClassType;
 import org.neep.utils.reflect.ReflectionHelper;
 
 /**
@@ -23,19 +24,26 @@ public class ServiceHandler implements Interceptor {
      */
     private final Class<?>[] remoteInterfaces;
 
-    public ServiceHandler(Class<?>[] remoteInterfaces) {
+    private final  Object target;
+    public ServiceHandler(Class<?>[] remoteInterfaces, Object target) {
         this.remoteInterfaces = remoteInterfaces;
+        this.target=target;
     }
 
     @Override
     public Object intercept(Invocation invocation) throws Throwable {
 
         //拦截代理对象BindService调用，委托给具体实现类
-        boolean foundBindService = ReflectionHelper.existMethod(invocation.getMethod(),BindableService.class);
-        if (foundBindService){
+        boolean found = ReflectionHelper.existMethod(invocation.getMethod(),BindableService.class);
+        if (found){
             BindableService  bindableService = new ServiceBinder(invocation);
             return bindableService.bindService();
         }
+        found = ReflectionHelper.existMethod(invocation.getMethod(),IRemoteClassType.class);
+        if (found){
+            return target.getClass();
+        }
+
 
 //        //拦截代理对象远程调用方法，委托给提交者，进行消息提交
 //        boolean remoteMethodFound = ReflectionHelper.existMethod(invocation.getMethod(),  this.remoteInterfaces );

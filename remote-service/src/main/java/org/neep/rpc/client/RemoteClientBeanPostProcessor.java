@@ -9,6 +9,7 @@ import net.devh.boot.grpc.client.channelfactory.GrpcChannelFactory;
 import org.assertj.core.util.Strings;
 import org.neep.rpc.anno.RemoteClient;
 import org.neep.rpc.anno.RemoteService;
+import org.neep.rpc.common.GrpcHelper;
 import org.neep.utils.exceptions.RemoteBeansException;
 import org.neep.utils.tools.StringHelper;
 import org.springframework.beans.BeansException;
@@ -73,7 +74,8 @@ public class RemoteClientBeanPostProcessor implements BeanPostProcessor {
     }
 
     private String createPath(String centerName,Class<?> clazz){
-        String className = StringHelper.removeInterfacePrefix(ClassUtils.getShortName(clazz));
+       // String className = StringHelper.removeInterfacePrefix(ClassUtils.getShortName(clazz));
+        String className = GrpcHelper.getRegisterSvcName(clazz);
         String path = String.format("/%s/%s/%s","services",centerName,
                 StringHelper.capitalFirst(className));
         return path;

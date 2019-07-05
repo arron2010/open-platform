@@ -3,6 +3,7 @@ package org.neep.rpc.client;
 
 import io.grpc.MethodDescriptor;
 import org.neep.proxy.api.ObjectInvoker;
+import org.neep.rpc.common.InitializationContext;
 import org.neep.rpc.msg.anno.MessageType;
 import org.neep.rpc.msg.entity.MsgTypeConstants;
 import org.neep.rpc.msg.entity.RemoteEntity;
@@ -27,6 +28,9 @@ import static org.neep.rpc.common.GrpcHelper.*;
  */
 public class RemoteServiceProxy <T>  implements ObjectInvoker,Serializable {
     private  final Class<T> serviceInterface;
+
+
+
 
     public RemoteServiceProxy(Class<T> serviceInterface) {
         this.serviceInterface = serviceInterface;
@@ -73,7 +77,11 @@ public class RemoteServiceProxy <T>  implements ObjectInvoker,Serializable {
 //    }
 
     private MethodDescriptor createMethodDescriptor(Method method) throws RemoteServiceException{
-        return getMethodDescriptor(this.serviceInterface,method);
+        if (InitializationContext.getInstance().isUseGateway()){
+            return getMethodDescriptor("proto.RemoteService","Invoke");
+        }else{
+            return getMethodDescriptor(this.serviceInterface,method);
+        }
     }
 
     private synchronized RpcMsg.Message createRpcMsg(String msgType,Object source)  throws RemoteServiceException{
@@ -83,4 +91,6 @@ public class RemoteServiceProxy <T>  implements ObjectInvoker,Serializable {
     private synchronized Object getReturnObject( RpcMsg.Message  response){
         return restoreFromGrpcMessage(response);
     }
+
+
 }

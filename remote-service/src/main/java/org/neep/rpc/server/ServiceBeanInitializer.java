@@ -5,6 +5,7 @@ import com.google.common.collect.Sets;
 import org.neep.proxy.api.ProxyProvider;
 import org.neep.proxy.impl.cglib.CglibProvider;
 import org.neep.rpc.anno.RemoteService;
+import org.neep.rpc.api.IRemoteClassType;
 import org.neep.spring.ext.api.IBeanInitializer;
 import org.neep.utils.reflect.ReflectionHelper;
 import org.springframework.beans.factory.BeanFactory;
@@ -45,8 +46,10 @@ public class ServiceBeanInitializer implements IBeanInitializer {
             }
         }
         Preconditions.checkState(proxyInterfaces.size() > 0, "Grpc服务接口缺少RemoteService注解");
-        ServiceHandler serviceHandler = new ServiceHandler(proxyInterfaces.toArray(new Class<?>[proxyInterfaces.size()]));
+        ServiceHandler serviceHandler = new ServiceHandler(proxyInterfaces.toArray(new Class<?>[proxyInterfaces.size()]),src);
         proxyInterfaces.add(io.grpc.BindableService.class);
+        proxyInterfaces.add(IRemoteClassType.class);
+
         Class<?>[] proxyClazz = proxyInterfaces.toArray(new Class[proxyInterfaces.size()]);
 
         ProxyProvider cglibProvider = new CglibProvider();

@@ -47,6 +47,26 @@ public final class RpcMsg {
      */
     com.google.protobuf.ByteString
         getMsgTypeBytes();
+
+    /**
+     * <code>string classType = 5;</code>
+     */
+    String getClassType();
+    /**
+     * <code>string classType = 5;</code>
+     */
+    com.google.protobuf.ByteString
+        getClassTypeBytes();
+
+    /**
+     * <code>string serviceUrl = 6;</code>
+     */
+    String getServiceUrl();
+    /**
+     * <code>string serviceUrl = 6;</code>
+     */
+    com.google.protobuf.ByteString
+        getServiceUrlBytes();
   }
   /**
    * Protobuf type {@code proto.Message}
@@ -64,6 +84,8 @@ public final class RpcMsg {
       result_ = false;
       resultText_ = "";
       msgType_ = "";
+      classType_ = "";
+      serviceUrl_ = "";
     }
 
     @Override
@@ -111,6 +133,18 @@ public final class RpcMsg {
               String s = input.readStringRequireUtf8();
 
               msgType_ = s;
+              break;
+            }
+            case 42: {
+              String s = input.readStringRequireUtf8();
+
+              classType_ = s;
+              break;
+            }
+            case 50: {
+              String s = input.readStringRequireUtf8();
+
+              serviceUrl_ = s;
               break;
             }
           }
@@ -222,6 +256,74 @@ public final class RpcMsg {
       }
     }
 
+    public static final int CLASSTYPE_FIELD_NUMBER = 5;
+    private volatile Object classType_;
+    /**
+     * <code>string classType = 5;</code>
+     */
+    public String getClassType() {
+      Object ref = classType_;
+      if (ref instanceof String) {
+        return (String) ref;
+      } else {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        String s = bs.toStringUtf8();
+        classType_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string classType = 5;</code>
+     */
+    public com.google.protobuf.ByteString
+        getClassTypeBytes() {
+      Object ref = classType_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b =
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (String) ref);
+        classType_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int SERVICEURL_FIELD_NUMBER = 6;
+    private volatile Object serviceUrl_;
+    /**
+     * <code>string serviceUrl = 6;</code>
+     */
+    public String getServiceUrl() {
+      Object ref = serviceUrl_;
+      if (ref instanceof String) {
+        return (String) ref;
+      } else {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        String s = bs.toStringUtf8();
+        serviceUrl_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string serviceUrl = 6;</code>
+     */
+    public com.google.protobuf.ByteString
+        getServiceUrlBytes() {
+      Object ref = serviceUrl_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b =
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (String) ref);
+        serviceUrl_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
@@ -246,6 +348,12 @@ public final class RpcMsg {
       if (!getMsgTypeBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 4, msgType_);
       }
+      if (!getClassTypeBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 5, classType_);
+      }
+      if (!getServiceUrlBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 6, serviceUrl_);
+      }
     }
 
     public int getSerializedSize() {
@@ -266,6 +374,12 @@ public final class RpcMsg {
       }
       if (!getMsgTypeBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, msgType_);
+      }
+      if (!getClassTypeBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, classType_);
+      }
+      if (!getServiceUrlBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(6, serviceUrl_);
       }
       memoizedSize = size;
       return size;
@@ -291,6 +405,10 @@ public final class RpcMsg {
           .equals(other.getResultText());
       result = result && getMsgType()
           .equals(other.getMsgType());
+      result = result && getClassType()
+          .equals(other.getClassType());
+      result = result && getServiceUrl()
+          .equals(other.getServiceUrl());
       return result;
     }
 
@@ -310,6 +428,10 @@ public final class RpcMsg {
       hash = (53 * hash) + getResultText().hashCode();
       hash = (37 * hash) + MSGTYPE_FIELD_NUMBER;
       hash = (53 * hash) + getMsgType().hashCode();
+      hash = (37 * hash) + CLASSTYPE_FIELD_NUMBER;
+      hash = (53 * hash) + getClassType().hashCode();
+      hash = (37 * hash) + SERVICEURL_FIELD_NUMBER;
+      hash = (53 * hash) + getServiceUrl().hashCode();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -447,6 +569,10 @@ public final class RpcMsg {
 
         msgType_ = "";
 
+        classType_ = "";
+
+        serviceUrl_ = "";
+
         return this;
       }
 
@@ -473,6 +599,8 @@ public final class RpcMsg {
         result.result_ = result_;
         result.resultText_ = resultText_;
         result.msgType_ = msgType_;
+        result.classType_ = classType_;
+        result.serviceUrl_ = serviceUrl_;
         onBuilt();
         return result;
       }
@@ -526,6 +654,14 @@ public final class RpcMsg {
         }
         if (!other.getMsgType().isEmpty()) {
           msgType_ = other.msgType_;
+          onChanged();
+        }
+        if (!other.getClassType().isEmpty()) {
+          classType_ = other.classType_;
+          onChanged();
+        }
+        if (!other.getServiceUrl().isEmpty()) {
+          serviceUrl_ = other.serviceUrl_;
           onChanged();
         }
         onChanged();
@@ -746,6 +882,144 @@ public final class RpcMsg {
         onChanged();
         return this;
       }
+
+      private Object classType_ = "";
+      /**
+       * <code>string classType = 5;</code>
+       */
+      public String getClassType() {
+        Object ref = classType_;
+        if (!(ref instanceof String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          String s = bs.toStringUtf8();
+          classType_ = s;
+          return s;
+        } else {
+          return (String) ref;
+        }
+      }
+      /**
+       * <code>string classType = 5;</code>
+       */
+      public com.google.protobuf.ByteString
+          getClassTypeBytes() {
+        Object ref = classType_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b =
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (String) ref);
+          classType_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string classType = 5;</code>
+       */
+      public Builder setClassType(
+          String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+
+        classType_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string classType = 5;</code>
+       */
+      public Builder clearClassType() {
+
+        classType_ = getDefaultInstance().getClassType();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string classType = 5;</code>
+       */
+      public Builder setClassTypeBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+
+        classType_ = value;
+        onChanged();
+        return this;
+      }
+
+      private Object serviceUrl_ = "";
+      /**
+       * <code>string serviceUrl = 6;</code>
+       */
+      public String getServiceUrl() {
+        Object ref = serviceUrl_;
+        if (!(ref instanceof String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          String s = bs.toStringUtf8();
+          serviceUrl_ = s;
+          return s;
+        } else {
+          return (String) ref;
+        }
+      }
+      /**
+       * <code>string serviceUrl = 6;</code>
+       */
+      public com.google.protobuf.ByteString
+          getServiceUrlBytes() {
+        Object ref = serviceUrl_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b =
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (String) ref);
+          serviceUrl_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string serviceUrl = 6;</code>
+       */
+      public Builder setServiceUrl(
+          String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+
+        serviceUrl_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string serviceUrl = 6;</code>
+       */
+      public Builder clearServiceUrl() {
+
+        serviceUrl_ = getDefaultInstance().getServiceUrl();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string serviceUrl = 6;</code>
+       */
+      public Builder setServiceUrlBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+
+        serviceUrl_ = value;
+        onChanged();
+        return this;
+      }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return this;
@@ -809,10 +1083,11 @@ public final class RpcMsg {
       descriptor;
   static {
     String[] descriptorData = {
-      "\n\024message/RpcMsg.proto\022\005proto\"O\n\007Message" +
+      "\n\024message/RpcMsg.proto\022\005proto\"v\n\007Message" +
       "\022\017\n\007content\030\001 \001(\014\022\016\n\006result\030\002 \001(\010\022\022\n\nres" +
-      "ultText\030\003 \001(\t\022\017\n\007msgType\030\004 \001(\tB#\n\027org.ne" +
-      "ep.rpc.msg.entityB\006RpcMsgP\000b\006proto3"
+      "ultText\030\003 \001(\t\022\017\n\007msgType\030\004 \001(\t\022\021\n\tclassT" +
+      "ype\030\005 \001(\t\022\022\n\nserviceUrl\030\006 \001(\tB#\n\027org.nee" +
+      "p.rpc.msg.entityB\006RpcMsgP\000b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -831,7 +1106,7 @@ public final class RpcMsg {
     internal_static_proto_Message_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_proto_Message_descriptor,
-        new String[] { "Content", "Result", "ResultText", "MsgType", });
+        new String[] { "Content", "Result", "ResultText", "MsgType", "ClassType", "ServiceUrl", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

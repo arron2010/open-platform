@@ -32,17 +32,21 @@ public abstract class GrpcHelper {
     public static MethodDescriptor getMethodDescriptor(Class<?> service,Method method){
 
         String serviceName= getServiceName(service);
+        MethodDescriptor<RpcMsg.Message,RpcMsg.Message> methodDescriptor = getMethodDescriptor(serviceName,method.getName());
+        return methodDescriptor;
+    }
+    public static MethodDescriptor getMethodDescriptor(String serviceName,String methodName){
 
-        MethodDescriptor<RpcMsg.Message,RpcMsg.Message> methodDescriptor =MethodDescriptor.<RpcMsg.Message,RpcMsg.Message>newBuilder().setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+        MethodDescriptor<RpcMsg.Message,RpcMsg.Message> methodDescriptor =MethodDescriptor.<RpcMsg.Message,RpcMsg.Message>newBuilder()
+                .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
                 .setFullMethodName(generateFullMethodName(
-                        serviceName, method.getName()))
+                        serviceName, methodName))
                 .setSampledToLocalTracing(true)
                 .setRequestMarshaller(ProtoUtils.marshaller(RpcMsg.Message.getDefaultInstance()))
                 .setResponseMarshaller(ProtoUtils.marshaller(RpcMsg.Message.getDefaultInstance()))
                 .build();
         return methodDescriptor;
     }
-
     public  static String getServiceName(Class<?> service){
         String className = service.getName();
         List<String> list =Splitter.on(".").splitToList(className);
@@ -50,6 +54,11 @@ public abstract class GrpcHelper {
         return serviceName;
     }
 
+    public static String getRegisterSvcName(Class<?> serviceClass){
+        List<String> list =Splitter.on(".").splitToList(serviceClass.getName());
+        String serviceName = list.get(list.size()-2) +"/"+list.get(list.size()-1);
+        return serviceName;
+    }
     public static String getCenterName(String ns){
         Iterable<String> iterable= Splitter.on("/").omitEmptyStrings().split(ns);
         Iterator<String> iterator= iterable.iterator();
@@ -70,7 +79,7 @@ public abstract class GrpcHelper {
             byte[] buffer =parser.serialize(obj);
             RpcMsg.Message message = RpcMsg.Message.newBuilder()
                     .setMsgType(msgType)
-                    .setResultText(obj.getClass().getName())
+                    .setClassType(obj.getClass().getName())
                     .setContent( ByteString.copyFrom(buffer))
                     .build();
             return message;
@@ -83,10 +92,10 @@ public abstract class GrpcHelper {
     public static Object restoreFromGrpcMessage(RpcMsg.Message msg){
         IMessageParser parser = SerializerFactory.getInstance().getParser(msg.getMsgType());
         try{
-            Object obj = parser.deserialize(msg.getContent().toByteArray(),msg.getResultText());
+            Object obj = parser.deserialize(msg.getContent().toByteArray(),msg.getClassType());
             return obj;
         }catch (IOException ex){
-            throw  new RemoteServiceException("消息类型："+msg.getMsgType()+" ;对象："+msg.getResultText()+";序列化异常。原因："+ex.getMessage(),ex);
+            throw  new RemoteServiceException("消息类型："+msg.getMsgType()+" ;对象："+msg.getClassType()+";序列化异常。原因："+ex.getMessage(),ex);
         }
     }
 
