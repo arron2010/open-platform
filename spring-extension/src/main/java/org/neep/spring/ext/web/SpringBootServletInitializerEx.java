@@ -1,7 +1,9 @@
 package org.neep.spring.ext.web;
 
 import org.neep.spring.ext.api.IBeanInitializer;
+import org.neep.spring.ext.boot.SpringApplicationEx;
 import org.neep.spring.ext.builder.SpringApplicationBuilderEx;
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
@@ -16,23 +18,29 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
  */
 public abstract  class SpringBootServletInitializerEx extends SpringBootServletInitializer {
 
-
     public SpringBootServletInitializerEx() {
         super();
     }
     protected SpringApplicationBuilder createSpringApplicationBuilder() {
-        return new SpringApplicationBuilderEx(new Class[0]);
+        SpringApplicationBuilderEx springApplicationBuilderEx =  new SpringApplicationBuilderEx(new Class[0]);
+        SpringApplication application = springApplicationBuilderEx.application();
+        if (application instanceof  SpringApplicationEx){
+            SpringApplicationEx applicationEx = (SpringApplicationEx)application;
+            applicationEx.setBeanInitializer(this.createBeanInitializer());
+        }
+
+        return springApplicationBuilderEx;
     }
 
 
     /**
      *@title
      *@description 创建bean初始化接口
-     *@param  [beanInitializer]
+     *@param
      *@return  org.neep.spring.ext.api.IBeanInitializer
      *@author
      *@createDate
      */
 
-    protected abstract IBeanInitializer createBeanInitializer(IBeanInitializer beanInitializer);
+    protected abstract IBeanInitializer createBeanInitializer();
 }

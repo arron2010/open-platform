@@ -55,9 +55,9 @@ public class SpringApplicationEx extends SpringApplication {
         return context;
     }
 
-    public IBeanInitializer getBeanInitializer() {
-        return beanInitializer;
-    }
+//    public IBeanInitializer getBeanInitializer() {
+//        return beanInitializer;
+//    }
 
     public void setBeanInitializer(IBeanInitializer beanInitializer) {
         this.beanInitializer = beanInitializer;

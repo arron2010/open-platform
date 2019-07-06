@@ -19,19 +19,19 @@ public class SpringApplicationBuilderEx extends SpringApplicationBuilder {
 
     public SpringApplicationBuilderEx(Class<?>... sources) {
         super(sources);
+
     }
 
     protected SpringApplication createSpringApplication(Class... sources) {
         SpringApplicationEx springApplicationEx= new SpringApplicationEx(sources);
-        springApplicationEx.setBeanInitializer(this.beanInitializer);
         return springApplicationEx;
     }
 
-    public IBeanInitializer getBeanInitializer() {
-        return beanInitializer;
-    }
-
-    public void setBeanInitializer(IBeanInitializer beanInitializer) {
-        this.beanInitializer = beanInitializer;
-    }
+//    public IBeanInitializer getBeanInitializer() {
+//        return beanInitializer;
+//    }
+//
+//    public void setBeanInitializer(IBeanInitializer beanInitializer) {
+//        this.beanInitializer = beanInitializer;
+//    }
 }
