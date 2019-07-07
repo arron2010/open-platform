@@ -66,7 +66,7 @@ public abstract class GrpcHelper {
         String centerName="";
         while (iterator.hasNext()){
             centerName= iterator.next();
-            if (++i == 2){
+            if (++i ==2){
                 break;
             }
         }

@@ -1,4 +1,4 @@
-package org.neep.rpc.common;
+package org.neep.rpc.client;
 
 import io.grpc.Attributes;
 import io.grpc.NameResolver;
@@ -7,13 +7,15 @@ import net.devh.boot.grpc.client.config.GrpcChannelProperties;
 import net.devh.boot.grpc.client.config.GrpcChannelsProperties;
 import net.devh.boot.grpc.client.nameresolver.ConfigMappedNameResolverFactory;
 import net.devh.boot.grpc.client.nameresolver.NameResolverConstants;
+import org.neep.rpc.common.GrpcHelper;
+import org.neep.rpc.common.RemoteConstants;
 
 import java.net.URI;
 import java.util.function.Function;
 
 /**
  * @Title ConfigMappedNameResolverFactoryEx
- * @Description
+ * @Description 从uri获取服务中心（center）名称，便于构建channel的时候，加载有关channel的配置。
  * @Copyright: 版权所有 (c) 2018 - 2019
  * @Company:
  * @Author

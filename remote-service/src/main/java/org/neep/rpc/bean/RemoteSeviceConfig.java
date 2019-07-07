@@ -17,7 +17,7 @@ import org.neep.etcd.registry.EtcdHeartbeatLease;
 import org.neep.etcd.registry.EtcdServiceRegistry;
 import org.neep.etcd.resolver.EtcdNameResolverFactory;
 import org.neep.rpc.client.RemoteClientBeanPostProcessor;
-import org.neep.rpc.common.ConfigMappedNameResolverFactoryEx;
+import org.neep.rpc.client.ConfigMappedNameResolverFactoryEx;
 import org.neep.rpc.common.ServiceConfigResourceLoader;
 import org.neep.rpc.common.ShadedNettyChannelFactoryEx;
 import org.neep.rpc.server.EtcdAutoRegistrant;
@@ -33,7 +33,7 @@ import java.util.List;
 
 /**
  * @Title RemoteSeviceConfig
- * @Description
+ * @Description spring bean的构建
  * @Copyright: 版权所有 (c) 2018 - 2019
  * @Company:
  * @Author
@@ -83,13 +83,13 @@ public class RemoteSeviceConfig {
 
     @Bean
     @ConditionalOnExpression("${NEED_ETCD:true}")
-    public NameResolver.Factory grpcNameResolverFactory(final EtcdProperties etcdProperties, final Client etcdClient) {
+    public NameResolver.Factory etcdGrpcNameResolverFactory(final EtcdProperties etcdProperties, final Client etcdClient) {
         return new EtcdNameResolverFactory(etcdProperties, etcdClient);
     }
 
     @Bean
-    @ConditionalOnExpression("${NEED_ETCD:false}")
-    public io.grpc.NameResolver.Factory grpcNameResolverFactory(GrpcChannelsProperties channelProperties) {
+    @ConditionalOnExpression("${NEED_ETCD}==false")
+    public io.grpc.NameResolver.Factory staticGrpcNameResolverFactory(GrpcChannelsProperties channelProperties) {
         return new ConfigMappedNameResolverFactoryEx(channelProperties, NameResolverProvider.asFactory(),
                 StaticNameResolverProvider.STATIC_DEFAULT_URI_MAPPER);
     }
